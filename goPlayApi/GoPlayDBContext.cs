@@ -15,5 +15,9 @@ namespace goPlayApi
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Venue> Venues { get; set; }
+        public DbSet<Reservation> Reservation { get; set; }
+        public DbSet<Promotion> Promotions { get; set; }
+        public DbSet<Gamification> Gamification { get; set; }
     }
 }

@@ -11,5 +11,6 @@ namespace goPlayApi.Models
         public String UserName { get; set; }
         public String Password { get; set; }
         public String EmailAddress { get; set; }
+        public Gamification Gamification { get; set; }
     }
 }

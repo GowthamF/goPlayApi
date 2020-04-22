@@ -27,7 +27,7 @@ namespace goPlayApi.Controllers
 
             if(_user != null)
             {
-                return Ok(user);
+                return Ok(_user);
             }
 
             return BadRequest("Incorrect User Name or Password");
