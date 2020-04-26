@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace goPlayApi.Migrations
 {
-    public partial class Inital : Migration
+    public partial class AddingImagesToVenues : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,8 @@ namespace goPlayApi.Migrations
                 {
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserName = table.Column<string>(nullable: true),
+                    UserFirstName = table.Column<string>(nullable: true),
+                    UserLastName = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     EmailAddress = table.Column<string>(nullable: true)
                 },
@@ -30,7 +31,12 @@ namespace goPlayApi.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     VenueName = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
-                    Number = table.Column<string>(nullable: true)
+                    Number = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
+                    Ratings = table.Column<double>(nullable: false),
+                    RatingCount = table.Column<int>(nullable: false),
+                    Amount = table.Column<double>(nullable: false),
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -64,6 +70,8 @@ namespace goPlayApi.Migrations
                     PromotionId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     PromotionName = table.Column<string>(nullable: true),
+                    PromotionPictures = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     VenueId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -100,6 +108,46 @@ namespace goPlayApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    ReviewId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ReviewComment = table.Column<string>(nullable: true),
+                    VenueId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.ReviewId);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Venues_VenueId",
+                        column: x => x.VenueId,
+                        principalTable: "Venues",
+                        principalColumn: "VenueId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VenuesImages",
+                columns: table => new
+                {
+                    VenueImageId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    VenueImage = table.Column<string>(nullable: true),
+                    VenueId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VenuesImages", x => x.VenueImageId);
+                    table.ForeignKey(
+                        name: "FK_VenuesImages_Venues_VenueId",
+                        column: x => x.VenueId,
+                        principalTable: "Venues",
+                        principalColumn: "VenueId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Gamification_UserId",
                 table: "Gamification",
@@ -115,6 +163,16 @@ namespace goPlayApi.Migrations
                 name: "IX_Reservation_VenueId",
                 table: "Reservation",
                 column: "VenueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_VenueId",
+                table: "Reviews",
+                column: "VenueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VenuesImages_VenueId",
+                table: "VenuesImages",
+                column: "VenueId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -127,6 +185,12 @@ namespace goPlayApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reservation");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
+
+            migrationBuilder.DropTable(
+                name: "VenuesImages");
 
             migrationBuilder.DropTable(
                 name: "Users");

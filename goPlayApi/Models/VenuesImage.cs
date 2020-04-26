@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace goPlayApi.Models
 {
-    public class Promotion
+    public class VenuesImage
     {
-        public int PromotionId { get; set; }
-        public String PromotionName { get; set; }
-        public String PromotionPictures { get; set; }
-        public String Description { get; set; }
+        [Key]
+        public int VenueImageId { get; set; }
+        public String VenueImage { get; set; }
         public int VenueId { get; set; }
         public Venue Venue { get; set; }
     }

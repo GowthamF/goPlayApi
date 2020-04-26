@@ -42,7 +42,13 @@ namespace goPlayApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("PromotionName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PromotionPictures")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("VenueId")
@@ -83,6 +89,25 @@ namespace goPlayApi.Migrations
                     b.ToTable("Reservation");
                 });
 
+            modelBuilder.Entity("goPlayApi.Models.Review", b =>
+                {
+                    b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ReviewComment")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("VenueId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ReviewId");
+
+                    b.HasIndex("VenueId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("goPlayApi.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -95,7 +120,10 @@ namespace goPlayApi.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("UserFirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserLastName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("UserId");
@@ -112,8 +140,23 @@ namespace goPlayApi.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("TEXT");
 
+                    b.Property<double>("Amount")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Number")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("RatingCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Ratings")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("VenueName")
                         .HasColumnType("TEXT");
@@ -121,6 +164,25 @@ namespace goPlayApi.Migrations
                     b.HasKey("VenueId");
 
                     b.ToTable("Venues");
+                });
+
+            modelBuilder.Entity("goPlayApi.Models.VenuesImage", b =>
+                {
+                    b.Property<int>("VenueImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("VenueId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("VenueImage")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("VenueImageId");
+
+                    b.HasIndex("VenueId");
+
+                    b.ToTable("VenuesImages");
                 });
 
             modelBuilder.Entity("goPlayApi.Models.Gamification", b =>
@@ -142,6 +204,24 @@ namespace goPlayApi.Migrations
                 });
 
             modelBuilder.Entity("goPlayApi.Models.Reservation", b =>
+                {
+                    b.HasOne("goPlayApi.Models.Venue", "Venue")
+                        .WithMany()
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("goPlayApi.Models.Review", b =>
+                {
+                    b.HasOne("goPlayApi.Models.Venue", "Venue")
+                        .WithMany()
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("goPlayApi.Models.VenuesImage", b =>
                 {
                     b.HasOne("goPlayApi.Models.Venue", "Venue")
                         .WithMany()

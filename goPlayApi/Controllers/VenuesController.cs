@@ -25,14 +25,14 @@ namespace goPlayApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Venue>>> GetVenues()
         {
-            return await _context.Venues.ToListAsync();
+            return await _context.Venues.Include(f=>f.VenueImages).ToListAsync();
         }
 
         // GET: api/Venues/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Venue>> GetVenue(int id)
         {
-            var venue = await _context.Venues.FindAsync(id);
+            var venue = await _context.Venues.Include(v=>v.VenueImages).Where(v=>v.VenueId==id).FirstOrDefaultAsync();
 
             if (venue == null)
             {
@@ -80,6 +80,7 @@ namespace goPlayApi.Controllers
         public async Task<ActionResult<Venue>> PostVenue(Venue venue)
         {
             _context.Venues.Add(venue);
+            _context.VenuesImages.AddRange(venue.VenueImages);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetVenue", new { id = venue.VenueId }, venue);
@@ -99,6 +100,23 @@ namespace goPlayApi.Controllers
             await _context.SaveChangesAsync();
 
             return venue;
+        }
+
+        [HttpPut("UpdateRatings/{id}")]
+        public async Task<ActionResult<Venue>> UpdateRatings(int id, Venue venue)
+        {
+            var _venue = await _context.Venues.FindAsync(id);
+
+            if(_venue == null)
+            {
+                return NotFound();
+            }
+
+            _venue.RatingCount++;
+            var calculateRatings = (_venue.Ratings + venue.Ratings) / _venue.RatingCount;
+            _venue.Ratings = calculateRatings;
+
+            return _venue;
         }
 
         private bool VenueExists(int id)

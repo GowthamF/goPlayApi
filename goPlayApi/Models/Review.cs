@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace goPlayApi.Models
 {
-    public class Promotion
+    public class Review
     {
-        public int PromotionId { get; set; }
-        public String PromotionName { get; set; }
-        public String PromotionPictures { get; set; }
-        public String Description { get; set; }
+
+        public int ReviewId { get; set; }
+        public String ReviewComment { get; set; }
         public int VenueId { get; set; }
         public Venue Venue { get; set; }
     }

@@ -23,7 +23,7 @@ namespace goPlayApi.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(User user)
         {
-            var _user = await _context.Users.Where(f => f.UserName == user.UserName && f.Password == user.Password).FirstOrDefaultAsync();
+            var _user = await _context.Users.Where(f => f.EmailAddress == user.EmailAddress && f.Password == user.Password).FirstOrDefaultAsync();
 
             if(_user != null)
             {
@@ -36,7 +36,7 @@ namespace goPlayApi.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(User user)
         {
-            var _user = await _context.Users.Where(f => f.UserName == user.UserName || f.EmailAddress == user.EmailAddress).FirstOrDefaultAsync();
+            var _user = await _context.Users.Where(f =>f.EmailAddress == user.EmailAddress).FirstOrDefaultAsync();
 
             if (_user == null)
             {
@@ -55,7 +55,8 @@ namespace goPlayApi.Controllers
 
             if (_user != null)
             {
-                _user.UserName = user.UserName;
+                _user.UserFirstName = user.UserFirstName;
+                _user.UserLastName = user.UserLastName;
                 _user.Password = user.Password;
                 await _context.SaveChangesAsync();
                 return Ok(_user);
