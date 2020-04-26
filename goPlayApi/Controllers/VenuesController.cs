@@ -83,7 +83,7 @@ namespace goPlayApi.Controllers
             _context.VenuesImages.AddRange(venue.VenueImages);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetVenue", new { id = venue.VenueId }, venue);
+            return CreatedAtAction("GetVenue", new { id = venue.VenueId }, venue.VenueId);
         }
 
         // DELETE: api/Venues/5

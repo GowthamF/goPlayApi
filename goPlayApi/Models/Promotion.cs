@@ -11,6 +11,7 @@ namespace goPlayApi.Models
         public String PromotionName { get; set; }
         public String PromotionPictures { get; set; }
         public String Description { get; set; }
+        public int PromotionAmount { get; set; }
         public int VenueId { get; set; }
         public Venue Venue { get; set; }
     }

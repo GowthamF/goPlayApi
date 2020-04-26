@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace goPlayApi.Migrations
 {
-    public partial class AddingImagesToVenues : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace goPlayApi.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserFirstName = table.Column<string>(nullable: true),
                     UserLastName = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
@@ -28,7 +28,7 @@ namespace goPlayApi.Migrations
                 columns: table => new
                 {
                     VenueId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     VenueName = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     Number = table.Column<string>(nullable: true),
@@ -48,7 +48,7 @@ namespace goPlayApi.Migrations
                 columns: table => new
                 {
                     GamificationId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Points = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
@@ -68,10 +68,11 @@ namespace goPlayApi.Migrations
                 columns: table => new
                 {
                     PromotionId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PromotionName = table.Column<string>(nullable: true),
                     PromotionPictures = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
+                    PromotionAmount = table.Column<int>(nullable: false),
                     VenueId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -90,7 +91,7 @@ namespace goPlayApi.Migrations
                 columns: table => new
                 {
                     ReservationId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     VenueId = table.Column<int>(nullable: false),
                     TimeSlot = table.Column<DateTime>(nullable: false),
                     SelectedDate = table.Column<DateTime>(nullable: false),
@@ -113,7 +114,7 @@ namespace goPlayApi.Migrations
                 columns: table => new
                 {
                     ReviewId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ReviewComment = table.Column<string>(nullable: true),
                     VenueId = table.Column<int>(nullable: false)
                 },
@@ -133,7 +134,7 @@ namespace goPlayApi.Migrations
                 columns: table => new
                 {
                     VenueImageId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     VenueImage = table.Column<string>(nullable: true),
                     VenueId = table.Column<int>(nullable: false)
                 },

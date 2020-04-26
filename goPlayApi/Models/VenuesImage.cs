@@ -12,6 +12,5 @@ namespace goPlayApi.Models
         public int VenueImageId { get; set; }
         public String VenueImage { get; set; }
         public int VenueId { get; set; }
-        public Venue Venue { get; set; }
     }
 }
