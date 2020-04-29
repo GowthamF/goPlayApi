@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using goPlayApi;
 
 namespace goPlayApi.Migrations
 {
     [DbContext(typeof(GoPlayDBContext))]
-    partial class GoPlayDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200426181604_changingthevariable")]
+    partial class changingthevariable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,9 +106,6 @@ namespace goPlayApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Ratings")
-                        .HasColumnType("float");
-
                     b.Property<string>("ReviewComment")
                         .HasColumnType("nvarchar(max)");
 
@@ -114,6 +113,8 @@ namespace goPlayApi.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ReviewId");
+
+                    b.HasIndex("VenueId");
 
                     b.ToTable("Reviews");
                 });
@@ -170,9 +171,6 @@ namespace goPlayApi.Migrations
                     b.Property<double>("Ratings")
                         .HasColumnType("float");
 
-                    b.Property<string>("TimeSlot")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("VenueName")
                         .HasColumnType("nvarchar(max)");
 
@@ -220,6 +218,15 @@ namespace goPlayApi.Migrations
                 });
 
             modelBuilder.Entity("goPlayApi.Models.Reservation", b =>
+                {
+                    b.HasOne("goPlayApi.Models.Venue", "Venue")
+                        .WithMany()
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("goPlayApi.Models.Review", b =>
                 {
                     b.HasOne("goPlayApi.Models.Venue", "Venue")
                         .WithMany()

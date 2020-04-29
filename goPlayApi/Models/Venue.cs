@@ -16,6 +16,7 @@ namespace goPlayApi.Models
         public int RatingCount { get; set; } = 0;
         public double Amount { get; set; } = 0.0;
         public String Description { get; set; }
+        public String TimeSlot { get; set; }
         public List<VenuesImage> VenueImages { get; set; }
     }
 }

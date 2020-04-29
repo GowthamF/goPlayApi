@@ -11,6 +11,6 @@ namespace goPlayApi.Models
         public int ReviewId { get; set; }
         public String ReviewComment { get; set; }
         public int VenueId { get; set; }
-        public Venue Venue { get; set; }
+        public double Ratings { get; set; }
     }
 }

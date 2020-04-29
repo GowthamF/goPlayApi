@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using goPlayApi;
 
 namespace goPlayApi.Migrations
 {
     [DbContext(typeof(GoPlayDBContext))]
-    partial class GoPlayDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200427124929_AddRatings")]
+    partial class AddRatings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,8 +106,8 @@ namespace goPlayApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Ratings")
-                        .HasColumnType("float");
+                    b.Property<int>("Ratings")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReviewComment")
                         .HasColumnType("nvarchar(max)");
@@ -169,9 +171,6 @@ namespace goPlayApi.Migrations
 
                     b.Property<double>("Ratings")
                         .HasColumnType("float");
-
-                    b.Property<string>("TimeSlot")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VenueName")
                         .HasColumnType("nvarchar(max)");
