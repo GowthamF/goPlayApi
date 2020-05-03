@@ -80,7 +80,6 @@ namespace goPlayApi.Controllers
         public async Task<ActionResult<Venue>> PostVenue(Venue venue)
         {
             _context.Venues.Add(venue);
-            _context.VenuesImages.AddRange(venue.VenueImages);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetVenue", new { id = venue.VenueId }, venue.VenueId);

@@ -24,6 +24,8 @@ namespace goPlayApi.Controllers
         public async Task<IActionResult> Login(User user)
         {
             var _user = await _context.Users.Where(f => f.EmailAddress == user.EmailAddress && f.Password == user.Password).FirstOrDefaultAsync();
+            
+
 
             if(_user != null)
             {

@@ -25,14 +25,14 @@ namespace goPlayApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Promotion>>> GetPromotions()
         {
-            return await _context.Promotions.Include(p=>p.Venue).ToListAsync();
+            return await _context.Promotions.ToListAsync();
         }
 
         // GET: api/Promotions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Promotion>> GetPromotion(int id)
         {
-            var promotion = await _context.Promotions.Include(p => p.Venue).Where(p => p.PromotionId == id).FirstOrDefaultAsync();
+            var promotion = await _context.Promotions.Where(p => p.PromotionId == id).FirstOrDefaultAsync();
 
             if (promotion == null)
             {
@@ -83,7 +83,7 @@ namespace goPlayApi.Controllers
             _context.Promotions.Add(promotion);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPromotion", new { id = promotion.PromotionId }, promotion);
+            return CreatedAtAction("GetPromotion", new { id = promotion.PromotionId }, promotion.PromotionId);
         }
 
         // DELETE: api/Promotions/5

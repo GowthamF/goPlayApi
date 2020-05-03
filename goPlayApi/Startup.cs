@@ -28,7 +28,14 @@ namespace goPlayApi
         {
             services.AddDbContext<GoPlayDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GoPlayDBMSSQL")));
             //services.AddDbContext<GoPlayDBContext>(options => options.UseSqlite(Configuration.GetConnectionString("GoPlayDBSQLLITE")));
+
+            
             services.AddControllers();
+
+            services.AddCors(options => options.AddPolicy("AllowOrigins", op => op.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().Build()));
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,11 +46,16 @@ namespace goPlayApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("AllowOrigins");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            
+
 
             app.UseEndpoints(endpoints =>
             {

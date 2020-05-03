@@ -21,6 +21,12 @@ namespace goPlayApi.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
+        {
+            return await _context.Reviews.ToListAsync();
+        }
+
         // GET: api/Reviews
         [HttpGet("GetVenuesReviews/{id}")]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviews(int id)

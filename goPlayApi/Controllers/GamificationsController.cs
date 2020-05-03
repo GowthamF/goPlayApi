@@ -25,7 +25,7 @@ namespace goPlayApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Gamification>>> GetGamification()
         {
-            return await _context.Gamification.ToListAsync();
+            return await _context.Gamification.Include(u=>u.User).ToListAsync();
         }
 
         // GET: api/Gamifications/5
@@ -73,6 +73,20 @@ namespace goPlayApi.Controllers
             }
         }
 
+        [HttpPut("UpdatePoints/{userId}")]
+        public async Task<IActionResult> UpdatePoints(int userId)
+        {
+            var gamification = await _context.Gamification.Where(g => g.UserId == userId).FirstOrDefaultAsync();
+
+            if(gamification != null)
+            {
+                gamification.Points += 10;
+
+                return Ok(gamification);
+            }
+            return BadRequest();
+        }
+
         // POST: api/Gamifications
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -82,7 +96,7 @@ namespace goPlayApi.Controllers
             _context.Gamification.Add(gamification);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGamification", new { id = gamification.GamificationId }, gamification);
+            return CreatedAtAction("GetGamification", new { id = gamification.GamificationId }, gamification.GamificationId);
         }
 
         // DELETE: api/Gamifications/5
