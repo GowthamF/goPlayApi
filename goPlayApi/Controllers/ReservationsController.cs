@@ -102,6 +102,26 @@ namespace goPlayApi.Controllers
             return reservation;
         }
 
+        [HttpGet("GetReservationData")]
+        public async Task<ActionResult<Dictionary<String,int>>> GetReservations()
+        {
+            var reservations = await _context.Reservation.ToListAsync();
+            Dictionary<String, int> reservation = new Dictionary<string, int>();
+            foreach (var data in reservations)
+            {
+                if (reservation.ContainsKey(data.SelectedDate))
+                {
+                    reservation[data.SelectedDate] += 1; 
+                }
+                else
+                {
+                    reservation.Add(data.SelectedDate, 1);
+                }
+            }
+            return reservation;
+            
+        }
+
         private bool ReservationExists(int id)
         {
             return _context.Reservation.Any(e => e.ReservationId == id);

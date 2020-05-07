@@ -25,7 +25,7 @@ namespace goPlayApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Gamification>>> GetGamification()
         {
-            return await _context.Gamification.Include(u=>u.User).ToListAsync();
+            return await _context.Gamification.Include(g=>g.User).ToListAsync();
         }
 
         // GET: api/Gamifications/5
@@ -80,8 +80,10 @@ namespace goPlayApi.Controllers
 
             if(gamification != null)
             {
+                var user = await _context.Users.Where(u => u.UserId == userId).FirstOrDefaultAsync();
+                gamification.User = user;
                 gamification.Points += 10;
-
+                await _context.SaveChangesAsync();
                 return Ok(gamification);
             }
             return BadRequest();

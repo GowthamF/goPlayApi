@@ -89,6 +89,19 @@ namespace goPlayApi.Controllers
         public async Task<ActionResult<Review>> PostReview(Review review)
         {
             _context.Reviews.Add(review);
+            
+
+            var _venue = await _context.Venues.FindAsync(review.VenueId);
+
+            if (_venue == null)
+            {
+                return NotFound();
+            }
+
+            _venue.RatingCount++;
+            var calculateRatings = (_venue.Ratings + review.Ratings) / _venue.RatingCount;
+            _venue.Ratings = calculateRatings;
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetReview", new { id = review.ReviewId }, review);
